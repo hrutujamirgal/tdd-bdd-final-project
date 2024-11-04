@@ -6,7 +6,7 @@
 #
 # https://www.apache.org/licenses/LICENSE-2.0
 #
-# Unless required by applicable law or agreed to in writing, software
+# Unless requir*ed by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
@@ -27,8 +27,17 @@ class ProductFactory(factory.Factory):
 
     class Meta:
         """Maps factory to data model"""
-
         model = Product
 
     id = factory.Sequence(lambda n: n)
-   ## Add code to create Fake Products 
+    name = FuzzyChoice(choices=[
+        "Hat", "Pants", "Shirt", "Apple", "Banana",
+        "Pots", "Towels", "Ford", "Chevy", "Hammer", "Wrench"
+    ])
+    description = factory.Faker("text")  # Random text for product descriptions
+    price = FuzzyDecimal(0.5, 2000.0, 2)  # Random price from 0.5 to 2000.0 with 2 decimal places
+    available = FuzzyChoice(choices=[True, False])  # Randomly assign available status
+    category = FuzzyChoice(choices=[
+        Category.UNKNOWN, Category.CLOTHS, Category.FOOD,
+        Category.HOUSEWARES, Category.AUTOMOTIVE, Category.TOOLS
+    ])
